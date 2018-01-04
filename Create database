@@ -21,4 +21,6 @@ SELECT * FROM table_name;
 SELECT column1, column2, ...
 FROM table_name
 WHERE condition;
-
+6. Alter table:
+ALTER TABLE table_name
+ADD column_name datatype;
