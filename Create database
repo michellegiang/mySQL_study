@@ -1,0 +1,20 @@
+Reference: https://www.w3schools.com/sql/sql_select.asp
+1. Create database
+CREATE DATABASE databasename;
+USE databasename;
+2. Create table:
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+3. Add data:
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
+4. Select data
+SELECT column1, column2, ...
+FROM table_name;
+or 
+SELECT * FROM table_name;
+
