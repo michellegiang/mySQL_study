@@ -44,3 +44,45 @@ Example:
 UPDATE Persons
 SET Salary = '500'
 WHERE PersonID = 03;
+
+9. MIN, MAX
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+
+Example
+SELECT MIN(Price)
+FROM Revenue
+WHERE Months = 3;
+
+SELECT MIN(Price) AS SmallestPrice
+FROM Revenue;
+
+10. COUNT, AVERAGE, SUM
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+
+Example:
+SELECT COUNT(ProductCode)
+FROM Revenue;
+
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+
+Example
+SELECT AVG(Revenue)
+FROM Revenue
+WHERE Months = 3;
+
+SELECT SUM(Revenue)
+FROM Revenue
+WHERE Months=3;
+
+11. DELETE (thuong phai chon theo cot PRIMARY KEY)
+DELETE FROM table_name
+WHERE condition;
+Example
+DELETE FROM Persons
+WHERE PersonID = 02
