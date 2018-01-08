@@ -32,6 +32,8 @@ ADD column_name datatype;
 ALTER TABLE table_name
 ADD PRIMARY KEY (column);
 
+ALTER TABLE background_information ADD IDnew INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+
 Example:
 ALTER TABLE Persons
 ADD PRIMARY KEY (PersonID);
