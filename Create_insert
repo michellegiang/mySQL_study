@@ -1,0 +1,90 @@
+-Reference: https://www.w3schools.com/sql/sql_select.asp
+ -1. Create database
+ -CREATE DATABASE databasename;
+ -USE databasename;
+ -2. Create table:
+ -CREATE TABLE table_name (
+ -    column1 datatype,
+ -    column2 datatype,
+ -    column3 datatype,
+ -   ....
+ -);
+ -3. Add data:
+ -INSERT INTO table_name (column1, column2, column3, ...)
+ -VALUES (value1, value2, value3, ...);
+ -Example
+ -INSERT INTO Persons (PersonID, LastName,FirstName, Address, City)
+ -VALUES ('03', 'Nguyen', 'Hung', 'Manhanttan', 'NY');
+ -
+ -4. Select data
+ -SELECT column1, column2, ...
+ -FROM table_name;
+ -or 
+ -SELECT * FROM table_name;
+ -5. Select with condition
+ -SELECT column1, column2, ...
+ -FROM table_name
+ -WHERE condition;
+ -6. Add column:
+ -ALTER TABLE table_name
+ -ADD column_name datatype;
+ -7. Add key(column). Need to have a key column
+ -ALTER TABLE table_name
+ -ADD PRIMARY KEY (column);
+ -
+ -ALTER TABLE background_information ADD IDnew INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+ -
+ -Example:
+ -ALTER TABLE Persons
+ -ADD PRIMARY KEY (PersonID);
+ -8. Update
+ -UPDATE table_name
+ -SET column1 = value1, column2 = value2, ...
+ -WHERE condition;
+ -
+ -Example:
+ -UPDATE Persons
+ -SET Salary = '500'
+ -WHERE PersonID = 03;
+ -
+ -9. MIN, MAX
+ -SELECT MIN(column_name)
+ -FROM table_name
+ -WHERE condition;
+ -
+ -Example
+ -SELECT MIN(Price)
+ -FROM Revenue
+ -WHERE Months = 3;
+ -
+ -SELECT MIN(Price) AS SmallestPrice
+ -FROM Revenue;
+ -
+ -10. COUNT, AVERAGE, SUM
+ -SELECT COUNT(column_name)
+ -FROM table_name
+ -WHERE condition;
+ -
+ -Example:
+ -SELECT COUNT(ProductCode)
+ -FROM Revenue;
+ -
+ -SELECT AVG(column_name)
+ -FROM table_name
+ -WHERE condition;
+ -
+ -Example
+ -SELECT AVG(Revenue)
+ -FROM Revenue
+ -WHERE Months = 3;
+ -
+ -SELECT SUM(Revenue)
+ -FROM Revenue
+ -WHERE Months=3;
+ -
+ -11. DELETE (thuong phai chon theo cot PRIMARY KEY)
+ -DELETE FROM table_name
+ -WHERE condition;
+ -Example
+ -DELETE FROM Persons
+ -WHERE PersonID = 02
