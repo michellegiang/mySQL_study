@@ -248,6 +248,16 @@ left outer join CustomerCode on background_information.IDnew=CustomerCode.Custom
 insert into background_information(LastName, FirstName, Age, Country, Address, Income, Job)
 values ('Nguyen', 'Thien', 24, 'Vietnam', 'Queens', 60000, 'Consultant');
 
+SELECT A.Lastname, A.FirstName, A.Income,B.LastName,B.FirstName, B.Income
+FROM background_information A, background_information B
+WHERE A.Income > B.Income
+ORDER BY A.Income;
+
+select A.IDnew, A.Country, A.Income, B.IDnew, B.Country, B.Income
+from background_information A, background_information B
+where A.Income < B.Income
+Order by A.Income;
+
 
 
 
