@@ -43,6 +43,15 @@ FROM store_msa
 WHERE state = 'NC';
 
 --Q7: What department (with department description), brand, style, and color brought in the greatest total amount of sales?--
+SELECT TOP 3 d.dept, d.deptdesc, s.brand, s.style, s.color, SUM(t.amt)
+FROM deptinfo d
+INNER JOIN skuinfo s
+ON d.dept = s.dept
+INNER JOIN trnsact t
+ON t.sku = s.sku
+WHERE stype = 'P'
+GROUP BY d.dept, d.deptdesc, s.brand, s.style, s.color
+ORDER BY SUM(t.amt) DESC;
 
 --Q8: How many stores have more than 180,000 distinct skus associated with them in the skstinfo table?--
 
