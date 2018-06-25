@@ -38,6 +38,9 @@ ON t.sku = s.sku AND t.store = s.store
 WHERE stype = 'P';
 
 --Q6: The store_msa table provides population statistics about the geographic location around a store. Using one query to retrieve your answer, how many MSAs are there within the state of North Carolina (abbreviated “NC”), and within these MSAs, what is the lowest population level (msa_pop) and highest income level (msa_income)?--
+SELECT COUNT(DISTINCT store), MIN(msa_pop), MAX(msa_income)
+FROM store_msa
+WHERE state = 'NC';
 
 --Q7: What department (with department description), brand, style, and color brought in the greatest total amount of sales?--
 
