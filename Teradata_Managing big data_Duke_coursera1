@@ -1,14 +1,37 @@
 
 DATABASE ua_dillards;
 --Q1: On what day was Dillard’s income based on total sum of purchases the greatest--
+SELECT TOP 3 saledate, SUM(amt)
+FROM TRNSACT
+WHERE stype = 'P' 
+GROUP BY saledate
+ORDER BY SUM(amt) DESC;
 
 --Q2: What is the deptdesc of the departments that have the top 3 greatest numbers of skus from the skuinfo table associated with them?--
+SELECT TOP 3 COUNT (DISTINCT s.sku) num, s.dept, d.deptdesc
+FROM skuinfo s
+INNER JOIN deptinfo d
+ON s.dept = d.dept
+GROUP BY s.dept, deptdesc
+ORDER BY num DESC;
 
 --Q3: Which table contains the most distinct sku numbers?--
+SELECT COUNT(DISTINCT sku)
+FROM skuinfo;
+SELECT COUNT(DISTINCT sku)
+FROM TRNSACT;
+SELECT COUNT(DISTINCT sku)
+FROM SKSTINFO;
 
 --Q4: How many skus are in the skstinfo table, but NOT in the skuinfo table?--
+SELECT COUNT(DISTINCT skstinfo.sku)
+FROM skstinfo skst
+INNER JOIN skuinfo s
+ON skst.sku = s.sku
+WHERE s.sku IS NULL;
 
 --Q5: What is the average amount of profit Dillard’s made per day? --
+
 
 --Q6: The store_msa table provides population statistics about the geographic location around a store. Using one query to retrieve your answer, how many MSAs are there within the state of North Carolina (abbreviated “NC”), and within these MSAs, what is the lowest population level (msa_pop) and highest income level (msa_income)?--
 
