@@ -31,7 +31,11 @@ ON skst.sku = s.sku
 WHERE s.sku IS NULL;
 
 --Q5: What is the average amount of profit Dillard’s made per day? --
-
+SELECT SUM(t.amt - (s.cost*t.quantity)) prof, COUNT(DISTINCT t.saledate) totalday, prof/totalday avg_profit
+FROM TRNSACT t
+INNER JOIN SKSTINFO s
+ON t.sku = s.sku AND t.store = s.store
+WHERE stype = 'P';
 
 --Q6: The store_msa table provides population statistics about the geographic location around a store. Using one query to retrieve your answer, how many MSAs are there within the state of North Carolina (abbreviated “NC”), and within these MSAs, what is the lowest population level (msa_pop) and highest income level (msa_income)?--
 
