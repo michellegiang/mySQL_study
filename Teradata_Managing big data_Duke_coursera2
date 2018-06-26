@@ -5,8 +5,27 @@ FROM skuinfo
 WHERE brand = 'Polo fas' AND (size = 'XXL' OR color = 'BLACK');
 
 --Q2: There was one store in the database which had only 11 days in one of its months (in other words, that store/month/year combination only contained 11 days of transaction data). In what city and state was this store located?--
+SELECT DISTINCT s.state, s.city, t.store
+FROM TRNSACT t
+JOIN STRINFO s 
+ON t.store = s.store
+WHERE t.store IN (
+SELECT days_in_month.store
+FROM (
+SELECT EXTRACT(Month from t.saledate) m, EXTRACT(Year from t.saledate) y, COUNT(DISTINCT t.saledate)d, t.store
+FROM TRNSACT t
+GROUP BY y, m, store
+HAVING d = 11) days_in_month);
 
 --Q3: Which sku number had the greatest increase in total sales revenue from November to December?--
+SELECT DISTINCT sku, 
+SUM(CASE WHEN EXTRACT(Month from saledate) = 11 THEN amt END) salenov,
+SUM(CASE WHEN EXTRACT(Month from saledate) = 12 THEN amt END) saledec,
+saledec - salenov increase
+FROM TRNSACT
+WHERE stype = 'P'
+GROUP BY sku
+ORDER BY increase DESC;
 
 --Q4: What vendor has the greatest number of distinct skus in the transaction table that do not exist in the skstinfo table? (Remember that vendors are listed as distinct numbers in our data set).--
 
