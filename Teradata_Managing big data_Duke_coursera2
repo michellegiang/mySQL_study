@@ -1,5 +1,8 @@
 Database ua_dillards;
 --Q1: How many distinct skus have the brand “Polo fas”, and are either size “XXL” or “black” in color?--
+SELECT COUNT(DISTINCT sku)
+FROM skuinfo
+WHERE brand = 'Polo fas' AND (size = 'XXL' OR color = 'BLACK');
 
 --Q2: There was one store in the database which had only 11 days in one of its months (in other words, that store/month/year combination only contained 11 days of transaction data). In what city and state was this store located?--
 
