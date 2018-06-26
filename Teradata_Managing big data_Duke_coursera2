@@ -60,6 +60,22 @@ ORDER BY avg DESC;
 --Q7: Compare the average daily revenue (as defined in Teradata Week 5 Exercise Guide) of the store with the highest msa_income and the store with the lowest median msa_income (according to the msa_income field). In what city and state were these two stores, and which store had a higher average daily revenue?--
 
 --Q8: Divide the msa_income groups up so that msa_incomes between 1 and 20,000 are labeled 'low', msa_incomes between 20,001 and 30,000 are labeled 'med-low', msa_incomes between 30,001 and 40,000 are labeled 'med-high', and msa_incomes between 40,001 and 60,000 are labeled 'high'. Which of these groups has the highest average daily revenue (as defined in Teradata Week 5 Exercise Guide) per store?--
+SELECT SUM(total)/SUM(num_day) as avg_daily_rev,
+CASE WHEN m.msa_income BETWEEN 1 AND 20000 THEN 'low'
+WHEN m.msa_income BETWEEN 20001 AND 30000 THEN 'med-low'
+WHEN m.msa_income BETWEEN 30001 AND 40000 THEN 'med-high'
+WHEN m.msa_income BETWEEN 40001 AND 60000 THEN 'HIGH'
+END as income_group
+FROM(
+SELECT t.store, EXTRACT(YEAR from t.saledate) y,  EXTRACT(MONTH from t.saledate) mth, SUM(t.amt) total, COUNT(DISTINCT t.saledate) num_day
+FROM TRNSACT t
+WHERE t.stype = 'P' AND y <> '2005' AND mth <> '8'
+GROUP BY t.store, y, mth
+HAVING num_day >=20) as neto
+JOIN STORE_MSA as m
+ON m.store = neto.store
+GROUP BY income_group
+ORDER BY avg_daily_rev DESC;
 
 --Q9: Divide stores up so that stores with msa populations between 1 and 100,000 are labeled 'very small', stores with msa populations between 100,001 and 200,000 are labeled 'small', stores with msa populations between 200,001 and 500,000 are labeled 'med_small', stores with msa populations between 500,001 and 1,000,000 are labeled 'med_large', stores with msa populations between 1,000,001 and 5,000,000 are labeled “large”, and stores with msa_population greater than 5,000,000 are labeled “very large”. What is the average daily revenue (as defined in Teradata Week 5 Exercise Guide) for a store in a “very large” population msa?--
 
