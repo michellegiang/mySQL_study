@@ -54,11 +54,25 @@ GROUP BY d.dept, d.deptdesc, s.brand, s.style, s.color
 ORDER BY SUM(t.amt) DESC;
 
 --Q8: How many stores have more than 180,000 distinct skus associated with them in the skstinfo table?--
+SELECT COUNT(DISTINCT sku)
+FROM skstinfo
+GROUP BY store
+HAVING COUNT(DISTINCT sku)>180000;
 
 --Q9: Look at the data from all the distinct skus in the “cop” department with a “federal” brand and a “rinse wash” color. You'll see that these skus have the same values in some of the columns, meaning that they have some features in common.
 In which columns do these skus have different values from one another, meaning that their features differ in the categories represented by the columns?--
+SELECT DISTINCT s.sku, s.dept, s.color, s.brand, s.style, s.size, s.packsize, s.vendor, d.deptdesc
+FROM Skuinfo s
+INNER JOIN Deptinfo d
+ON s.dept = d.dept AND s.dept = d.dept
+WHERE d.deptdesc = 'cop' AND s.brand = 'federal' AND s.color = 'rinse wash';
 
 --Q10: How many skus are in the skuinfo table, but NOT in the skstinfo table? --
+SELECT COUNT(DISTINCT s.sku)
+FROM skuinfo s
+LEFT JOIN skstinfo skst
+ON s.sku = skst.sku
+WHERE skst.sku IS NULL;
 
 --Q11:In what city and state is the store that had the greatest total sum of sales?--
 
