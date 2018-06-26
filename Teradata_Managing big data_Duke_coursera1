@@ -75,11 +75,28 @@ ON s.sku = skst.sku
 WHERE skst.sku IS NULL;
 
 --Q11:In what city and state is the store that had the greatest total sum of sales?--
+SELECT TOP 2 SUM(t.amt) totalsale, t.store, s.city, s.state
+FROM TRNSACT t
+INNER JOIN STRINFO s
+ON t.store = s.store
+WHERE stype = 'P' 
+GROUP BY t.store, s.state, s.city
+ORDER BY totalsale DESC;
 
 --Q12: How many states have more than 10 Dillards stores in them?--
+SELECT COUNT(DISTINCT store) storenum, state
+FROM STRINFO
+GROUP BY state
+HAVING storenum > 10;
 
 --Q13: What is the suggested retail price of all the skus in the “reebok” department with the “skechers” brand and a “wht/saphire” color?--
-
+SELECT DISTINCT s.sku, s.color, t.retail, d.dept, d.deptdesc
+FROM skuinfo s
+INNER JOIN skstinfo t
+ON s.sku = t.sku
+INNER JOIN deptinfo d
+ON s.dept = d.dept
+WHERE d.deptdesc = 'reebok' AND s.brand = 'skechers' AND s.color = 'wht/saphire';
 
 
 
