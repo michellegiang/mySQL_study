@@ -28,10 +28,34 @@ GROUP BY sku
 ORDER BY increase DESC;
 
 --Q4: What vendor has the greatest number of distinct skus in the transaction table that do not exist in the skstinfo table? (Remember that vendors are listed as distinct numbers in our data set).--
+SELECT s.vendor, COUNT(DISTINCT t.sku) num_sku
+FROM skuinfo s
+JOIN TRNSACT t
+ON s.sku = t.sku
+LEFT JOIN skstinfo skst
+ON t.sku = skst.sku AND t.store = skst.store
+WHERE skst.sku IS NULL
+GROUP BY s.vendor
+ORDER BY num_sku DESC;
 
 --Q5: What is the brand of the sku with the greatest standard deviation in sprice? Only examine skus which have been part of over 100 transactions.--
 
 --Q6: What is the city and state of the store which had the greatest increase in average daily revenue (as defined in Teradata Week 5 Exercise Guide) from November to December?--
+SELECT s.city, s.state, t.store,
+SUM(CASE WHEN EXTRACT(Month from t.saledate) = 11 THEN amt END) salenov,
+SUM(CASE WHEN EXTRACT(Month from t.saledate) = 12 THEN amt END) saledec,
+COUNT(DISTINCT CASE WHEN EXTRACT(Month from t.saledate) = 11 THEN saledate END) daynov,
+COUNT(DISTINCT CASE WHEN EXTRACT(Month from t.saledate) = 12 THEN saledate END) daydec,(saledec/daydec) - (salenov/daynov) as avg
+FROM TRNSACT t
+INNER JOIN STRINFO s
+ON t.store = s.store
+WHERE t.stype = 'P' AND t.store||year||month IN
+(SELECT t.store || EXTRACT(Year from t.saledate) year || EXTRACT(Month from t.saledate) month 
+FROM TRNSACT
+GROUP BY store, year, month
+HAVING COUNT(DISTINCT t.saledate)>=20)
+GROUP BY s.city, s.state, t.store
+ORDER BY avg DESC;
 
 --Q7: Compare the average daily revenue (as defined in Teradata Week 5 Exercise Guide) of the store with the highest msa_income and the store with the lowest median msa_income (according to the msa_income field). In what city and state were these two stores, and which store had a higher average daily revenue?--
 
