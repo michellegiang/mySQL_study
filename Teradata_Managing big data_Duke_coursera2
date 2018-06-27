@@ -71,9 +71,9 @@ SELECT t.store, EXTRACT(YEAR from t.saledate) y,  EXTRACT(MONTH from t.saledate)
 FROM TRNSACT t
 WHERE t.stype = 'P' AND y <> '2005' AND mth <> '8'
 GROUP BY t.store, y, mth
-HAVING num_day >=20) as neto
+HAVING num_day >=20) as w
 JOIN STORE_MSA as m
-ON m.store = neto.store
+ON m.store = w.store
 GROUP BY income_group
 ORDER BY avg_daily_rev DESC;
 
