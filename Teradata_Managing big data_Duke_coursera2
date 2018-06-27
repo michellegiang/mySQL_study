@@ -49,10 +49,10 @@ COUNT(DISTINCT CASE WHEN EXTRACT(Month from t.saledate) = 12 THEN saledate END) 
 FROM TRNSACT t
 INNER JOIN STRINFO s
 ON t.store = s.store
-WHERE t.stype = 'P' AND t.store||year||month IN
-(SELECT t.store || EXTRACT(Year from t.saledate) year || EXTRACT(Month from t.saledate) month 
+WHERE t.stype = 'P' AND t.store||y||m IN
+(SELECT t.store || EXTRACT(Year from t.saledate) y || EXTRACT(Month from t.saledate) m 
 FROM TRNSACT
-GROUP BY store, year, month
+GROUP BY store, y, m
 HAVING COUNT(DISTINCT t.saledate)>=20)
 GROUP BY s.city, s.state, t.store
 ORDER BY avg DESC;
